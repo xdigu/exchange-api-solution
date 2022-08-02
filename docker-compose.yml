@@ -1,0 +1,61 @@
+version: "3"
+services:
+  exchange-api:
+    restart: always
+    build:
+      context: ./exchange-api
+      dockerfile: Dockerfile
+    container_name: exchange-api
+    volumes:
+      - ./exchange-api/src:/app/src
+      - /exchange-api/node_modules
+    networks: [ network1 ]
+
+  resolution-api:
+    restart: always
+    build:
+      context: ./resolution-api
+      dockerfile: Dockerfile
+    container_name: resolution-api
+    volumes:
+      - ./resolution-api/src:/app/src
+      - /resolution-api/node_modules
+    links:
+      - exchange-api
+    networks: [ network1 ]
+
+  resolution-web-client:
+    restart: always
+    build:
+      context: ./resolution-web-client
+      dockerfile: Dockerfile
+    container_name: resolution-web-client
+    stdin_open: true
+    volumes:
+      - ./resolution-web-client/src:/app/src
+      - /resolution-web-client/node_modules
+    links:
+      - resolution-api
+    networks: [ network1 ]
+
+  web-nginx:
+    logging:
+      driver: none
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    container_name: web-server
+    volumes:
+      - ./nginx:/etc/nginx/conf.d/
+    depends_on:
+      - exchange-api
+      - resolution-api
+      - resolution-web-client
+    ports:
+      - "3000:80"
+      - "8080:7000"
+    networks: [ network1 ]
+
+networks:
+  network1:
+    driver: bridge
