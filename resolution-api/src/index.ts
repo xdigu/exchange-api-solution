@@ -1,22 +1,14 @@
-import express from 'express';
 import http from 'http';
 
-const PORT = 8081;
+import server from './server';
 
-const app = express();
+const PORT = process.env.PORT || 8081;
 
-app.use(express.json());
-
-app.use((req, res) => {
-  const { body } = req;
-
-  console.log('a', body);
-
-  res.send('asdf');
-});
-
-const httpServer = http.createServer(app);
+const httpServer = http.createServer(server);
 
 httpServer.listen(PORT, () => {
   console.log(`server running on port ${PORT}`);
 });
+
+// Remove experimental fetch warning
+process.removeAllListeners('warning');
