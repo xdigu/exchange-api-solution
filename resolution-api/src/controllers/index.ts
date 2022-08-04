@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 
-import { Service } from '../services';
+import Service from '../services';
 import { STATUS_CODE } from '../utils';
 
 const service = new Service();
