@@ -16,7 +16,7 @@ function log(serviceName: string, currency: string, value: number) {
 
 class CurrencyService {
   serviceA(currency: string) {
-    const currencyValue = getCurrencyValue(3, 7);
+    const currencyValue = getCurrencyValue(1, 7);
 
     log("A", currency, currencyValue);
 
@@ -24,7 +24,7 @@ class CurrencyService {
   }
 
   serviceB(currency: string) {
-    const currencyValue = getCurrencyValue(5, 9);
+    const currencyValue = getCurrencyValue(1, 4);
 
     log("B", currency, currencyValue);
 
@@ -32,7 +32,7 @@ class CurrencyService {
   }
 
   serviceC(currency: string) {
-    const currencyValue = getCurrencyValue(4, 6);
+    const currencyValue = getCurrencyValue(1, 4);
 
     log("C", currency, currencyValue);
 
