@@ -7,7 +7,7 @@ services:
       dockerfile: Dockerfile
     container_name: exchange-api
     environment:
-      - docker=true
+      - DOCKER=true
     volumes:
       - ./exchange-api/src:/app/src
       - /exchange-api/node_modules
@@ -19,6 +19,8 @@ services:
       context: ./resolution-api
       dockerfile: Dockerfile
     container_name: resolution-api
+    environment:
+      - DOCKER=true
     volumes:
       - ./resolution-api/src:/app/src
       - /resolution-api/node_modules
@@ -30,8 +32,6 @@ services:
       context: ./resolution-web-client
       dockerfile: Dockerfile
     container_name: resolution-web-client
-    environment:
-      - docker=true
     stdin_open: true
     volumes:
       - ./resolution-web-client/src:/app/src
