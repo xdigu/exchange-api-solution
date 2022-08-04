@@ -5,9 +5,9 @@ const STATUS_CODE = {
   ERROR: 500,
 };
 
-const timeOutMin = 200;
+const timeOutMin = 10;
 
-const timeOutMax = 1500;
+const timeOutMax = 3000;
 
 function randomNumber(min: number, max: number) {
   return Math.floor(Math.random() * (max - min) + min);

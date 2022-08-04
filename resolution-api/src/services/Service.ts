@@ -32,7 +32,7 @@ async function getServiceCResponse(resp: ServiceCResponse) {
       observer.unsubscribe(listenObserver);
 
       reject('Cancel Service C');
-    }, 1000);
+    }, 5000);
 
     function listenObserver(data: Data) {
       if (data.cid === resp.cid) {

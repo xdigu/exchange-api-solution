@@ -1,6 +1,6 @@
 import observable from './observable';
 import currencyService from './currency';
-import { controllerTimeout } from '../utils';
+import { sleep, randomNumber } from '../utils';
 
 function formatUrl(url: string) {
   const urlProtocol = 'http';
@@ -34,7 +34,7 @@ async function getNotification(data: Data) {
     headers: { 'Content-type': 'application/json; charset=UTF-8' },
   };
 
-  await controllerTimeout();
+  await sleep(randomNumber(10, 5001));
 
   fetch(url, options).catch(logError);
 }
