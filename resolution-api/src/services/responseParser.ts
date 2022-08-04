@@ -67,6 +67,8 @@ class ResponseParser {
 
   errorHandler(err: Response) {
     console.log(err);
+
+    return null;
   }
 }
 

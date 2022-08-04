@@ -3,8 +3,8 @@ import serviceUrls from './serviceUrls';
 import responseParser from './responseParser';
 
 class Service {
-  async exchange(currency: string) {
-    const data = await Promise.race([
+  async exchange(currency: string): Promise<number> {
+    const responses = await Promise.all([
       fetch(serviceUrls.serviceAUrl(currency), {
         method: 'GET',
         headers: { 'Content-Type': 'application/json' },
@@ -32,7 +32,11 @@ class Service {
         .catch(responseParser.errorHandler),
     ]);
 
-    return data;
+    const minimumExchangeValue = Math.min(
+      ...responses.filter((response) => Boolean(response)).map((response) => Number(response?.value)),
+    );
+
+    return minimumExchangeValue;
   }
 
   async callBack(exchangeData: Data) {

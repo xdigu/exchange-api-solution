@@ -18,7 +18,11 @@ class Controller {
 
     const response = await service.exchange(currency as string);
 
-    return resp.json({ success: true, message: 'hello world', data: response });
+    return resp.json({
+      cotacao: response,
+      moeda: currency,
+      comparativo: 'BRL',
+    });
   }
 
   callback(req: Request, resp: Response) {
