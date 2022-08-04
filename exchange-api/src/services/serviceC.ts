@@ -1,8 +1,9 @@
-import observable from "./observable";
-import currencyService from "./currency";
+import observable from './observable';
+import currencyService from './currency';
+import { controllerTimeout } from '../utils';
 
 function formatUrl(url: string) {
-  const urlProtocol = "http";
+  const urlProtocol = 'http';
 
   const urlHasProtocol = url.startsWith(urlProtocol);
 
@@ -13,8 +14,8 @@ function logError(err: Error) {
   console.log(err);
 }
 
-function getNotification(data: any) {
-  const currencyValue = currencyService.serviceC(data.tipo);
+async function getNotification(data: Data) {
+  const currencyValue = currencyService.serviceC(data.type);
 
   const url = formatUrl(data.callback);
 
@@ -28,10 +29,12 @@ function getNotification(data: any) {
   };
 
   const options = {
-    method: "POST",
+    method: 'POST',
     body: JSON.stringify(body),
-    headers: { "Content-type": "application/json; charset=UTF-8" },
+    headers: { 'Content-type': 'application/json; charset=UTF-8' },
   };
+
+  await controllerTimeout();
 
   fetch(url, options).catch(logError);
 }

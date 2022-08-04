@@ -1,17 +1,18 @@
-import { Request, Response } from "express";
+import { Request, Response } from 'express';
+import { v4 as uuid } from 'uuid';
 
-import { currencyService, observable } from "../services";
-import { STATUS_CODE } from "../utils";
+import { currencyService, observable } from '../services';
+import { controllerTimeout, STATUS_CODE } from '../utils';
 
 function validURL(str: string) {
   const pattern = new RegExp(
-    "^(https?:\\/\\/)?" +
-      "((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)+[a-z]{2,}|" +
-      "((\\d{1,3}\\.){3}\\d{1,3}))" +
-      "(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*" +
-      "(\\?[;&a-z\\d%_.~+=-]*)?" +
-      "(\\#[-a-z\\d_]*)?$",
-    "i"
+    '^(https?:\\/\\/)?' +
+      '((([a-z\\d]([a-z\\d-]*[a-z\\d])*))+[a-z]{2,}|' +
+      '((\\d{1,3}\\.){3}\\d{1,3}))' +
+      '(\\:\\d+)?(\\/[-a-z\\d%_.~+]*)*' +
+      '(\\?[;&a-z\\d%_.~+=-]*)?' +
+      '(\\#[-a-z\\d_]*)?$',
+    'i',
   );
 
   return pattern.test(str);
@@ -29,9 +30,9 @@ class Controller {
 
     const currencyExchange = currencyService.serviceA(moeda as string);
 
-    return resp
-      .status(STATUS_CODE.SUCESS)
-      .json({ cotacao: currencyExchange, moeda: moeda, symbol: "💵" });
+    await controllerTimeout();
+
+    return resp.status(STATUS_CODE.SUCESS).json({ cotacao: currencyExchange, moeda: moeda, symbol: '💵' });
   }
 
   async serviceB(req: Request, resp: Response) {
@@ -48,6 +49,8 @@ class Controller {
 
     const fator = 1000;
 
+    await controllerTimeout();
+
     return resp.status(STATUS_CODE.SUCESS).json({
       fator: fator,
       currency: curr,
@@ -60,21 +63,23 @@ class Controller {
 
     if (!tipo || !callback || !validURL(callback)) {
       return resp.status(STATUS_CODE.UNPROCESSABLE_ENTITY).json({
-        mood: "⛔",
+        mood: '⛔',
         erro: "Oh, no! Você precisa informar os parâmetros 'callback' com uma URL válida e 'tipo' para a moeda!",
-        dica: "Provavelmente, você quer usar http://127.0.0.1:<porta> ou http://host.docker.internal:<porta> para que o docker acesse seu ambiente :)",
+        dica: 'Provavelmente, você quer usar http://127.0.0.1:<porta> ou http://host.docker.internal:<porta> para que o docker acesse seu ambiente :)',
       });
     }
+
+    const hash = uuid();
 
     observable.notify({
       callback: callback,
       type: tipo,
-      cid: String(new Date().getTime()),
+      cid: hash,
     });
 
     return resp.status(STATUS_CODE.SUCESS).json({
-      mood: "✅",
-      cid: new Date().getTime(),
+      mood: '✅',
+      cid: hash,
       mensagem: `Quando a cotação finalizar, uma requisição para ${callback} será feita.`,
     });
   }

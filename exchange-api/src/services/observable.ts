@@ -1,7 +1,9 @@
-interface Data {
-  callback: string;
-  type: string;
-  cid: string;
+declare global {
+  interface Data {
+    callback: string;
+    type: string;
+    cid: string;
+  }
 }
 
 type Observer = (data: Data) => void;

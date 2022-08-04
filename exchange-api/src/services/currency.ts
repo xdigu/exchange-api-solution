@@ -22,6 +22,7 @@ class CurrencyService {
 
     return currencyValue;
   }
+
   serviceB(currency: string) {
     const currencyValue = getCurrencyValue(5, 9);
 

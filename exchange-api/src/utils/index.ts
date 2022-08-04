@@ -5,4 +5,20 @@ const STATUS_CODE = {
   ERROR: 500,
 };
 
-export { STATUS_CODE };
+const timeOutMin = 200;
+
+const timeOutMax = 1500;
+
+function randomNumber(min: number, max: number) {
+  return Math.floor(Math.random() * (max - min) + min);
+}
+
+function sleep(time: number) {
+  return new Promise((resolve) => setTimeout(() => resolve(null), time));
+}
+
+function controllerTimeout() {
+  return sleep(randomNumber(timeOutMin, timeOutMax));
+}
+
+export { controllerTimeout, randomNumber, sleep, STATUS_CODE };

@@ -13,10 +13,6 @@ class Server {
 
   middlewares() {
     this.app.use(express.json());
-    this.app.use((req, res, next) => {
-      console.log('new request');
-      next();
-    });
   }
 
   routes() {
