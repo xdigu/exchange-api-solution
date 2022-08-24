@@ -1,25 +1,36 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import Currency from "./components/currency";
+
+import "./App.css";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+    <>
+      <header>
+        <h1>Exchange Service</h1>
       </header>
-    </div>
+
+      <div className="app-container">
+        <Currency />
+      </div>
+
+      <div className="read-the-docs">
+        <p>
+          This app is a resolution of a challenge about create a backend service
+          to get the lowest currency value from 3 different exchange services,
+          each service has it own complexity to be implement.
+        </p>
+        <p>
+          To check the challange:
+          <br />
+          <a
+            href="https://dev.to/zanfranceschi/desafio-integracao-com-apis-4jco"
+            target="_blank"
+          >
+            [Desafio] - Integração com Múltiplas APIs (scatter/gather)
+          </a>
+        </p>
+      </div>
+    </>
   );
 }
 

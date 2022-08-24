@@ -10,8 +10,14 @@ COPY node_modules ./node_modules
 
 RUN yarn
 
-COPY . ./
+COPY ./src ./src
 
-EXPOSE 3000
+COPY index.html ./
 
-CMD ["yarn", "start"]
+COPY vite.config.ts ./
+
+COPY public ./
+
+EXPOSE 5173
+
+CMD ["yarn", "dev"]
